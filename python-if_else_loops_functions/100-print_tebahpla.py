@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-for i in range(26):
+result = ""
+for i in range(122, 96, -1):
     if i % 2 == 0:
-        a=chr(ord('z') - i)
+        result += chr(i)
     else:
-        a=chr(ord('Y') - (i - 1))
-    print(a,end="")
+        result += chr(i - 32)
+print("{}".format(result), end="")
