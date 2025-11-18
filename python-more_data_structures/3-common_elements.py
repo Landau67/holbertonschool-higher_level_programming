@@ -6,4 +6,3 @@ def common_elements(set_1, set_2):
             if i == f:
                 m.append(i)
     return m
-
