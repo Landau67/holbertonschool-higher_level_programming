@@ -2,6 +2,6 @@
 """uyfuydfuvidfogjio"""
 
 
-def is_same_class(obj, a_class):
-    """regfuvbibvuvbu"""
+def is_kind_of_class(obj, a_class):
+    """guirdfhhfui"""   
     return type(obj) is a_class
