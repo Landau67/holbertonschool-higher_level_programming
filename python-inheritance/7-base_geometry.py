@@ -4,12 +4,13 @@
 
 class BaseGeometry:
     """vejofvfvnfnj"""
-    pass
 
     def area(self):
+        """jnfgiugfdgfdg"""
         raise Exception("area() is not implemented")
 
     def integer_validator(self, name, value):
+        """njfgdjjsdnfigdsfhfv"""
         if not isinstance(value, int):
             raise TypeError(f"{name} must be an integer")
         if value <= 0:
