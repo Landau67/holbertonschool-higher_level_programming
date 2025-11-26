@@ -14,8 +14,8 @@ class Student:
         if attrs is None:
             return self.__dict__
         else:
-            Result = []
-            for attr in attrs:
-                if hasattr(self, attr):
-                    Result[attr] = getattr(self, attr)
+            Result = {}
+            for i in attrs:
+                if hasattr(self, i):
+                    Result[i] = getattr(self, i)
         return Result
