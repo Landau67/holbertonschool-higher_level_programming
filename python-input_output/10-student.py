@@ -15,7 +15,7 @@ class Student:
             return self.__dict__
         else:
             Result = []
-            for i in attrs:
-                if hasattr(self, i):
-                    Result[i] = getattr(self, i)
+            for attr in attrs:
+                if hasattr(self, attr):
+                    Result[attr] = getattr(self, attr)
         return Result
