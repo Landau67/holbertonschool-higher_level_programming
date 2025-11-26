@@ -3,6 +3,7 @@
 
 
 def pascal_triangle(n):
+    """bcshdbcvnsdnvds"""
     triangle = []
     for i in range(n):
         row = []
