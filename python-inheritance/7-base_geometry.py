@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-"""mjhnbgfvdcdvfbgnh"""
+"""Module for BaseGeometry class."""
 
 
 class BaseGeometry:
-    """yjmnhtbgrfvdcx"""
+    """empty class BaseGeometry."""
     def area(self):
         raise Exception("area() is not implemented")
 
