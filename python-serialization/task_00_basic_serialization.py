@@ -3,7 +3,7 @@
 import pickle
 
 
-def serialize_and_save_to_file(filename, data):
+def serialize_and_save_to_file(data, filename):
     try:
         with open(filename, 'wb') as file:
             pickle.dump(data, file)
