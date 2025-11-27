@@ -1,2 +1,2 @@
 -- Average
-AVG score FROM second_table GROUP BY average; 
+SELECT AVG(score) AS average FROM second_table;
