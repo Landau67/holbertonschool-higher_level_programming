@@ -1,4 +1,4 @@
-#!/usr/bin/pytjon3
+#!/usr/bin/python3
 """ojfbsduifisdnfods"""
 
 import sys
