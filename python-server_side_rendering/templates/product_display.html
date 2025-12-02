@@ -1,50 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Display</title>
     <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid black; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .error { color: red; font-weight: bold; }
-        .info { color: blue; margin: 10px 0; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .error {
+            background-color: #ffe6e6;
+            color: #cc0000;
+            padding: 15px;
+            border: 1px solid #ff9999;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .info {
+            background-color: #e6f2ff;
+            color: #0066cc;
+            padding: 15px;
+            border: 1px solid #99ccff;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .price {
+            text-align: right;
+            font-weight: bold;
+            color: #009933;
+        }
+        .nav-links {
+            margin: 20px 0;
+        }
+        .nav-links a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 8px 12px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+        .nav-links a:hover {
+            background-color: #555;
+        }
+        .empty {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 20px;
+        }
+        .source-tabs {
+            display: flex;
+            margin: 20px 0;
+            border-bottom: 2px solid #ddd;
+        }
+        .source-tab {
+            padding: 10px 20px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            margin-right: 5px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 5px 5px 0 0;
+        }
+        .source-tab:hover {
+            background-color: #e0e0e0;
+        }
+        .source-tab.active {
+            background-color: #333;
+            color: white;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <h1>Product Display</h1>
     
+    <div class="source-tabs">
+        <a href="/products?source=json" class="source-tab {% if source == 'json' %}active{% endif %}">JSON</a>
+        <a href="/products?source=csv" class="source-tab {% if source == 'csv' %}active{% endif %}">CSV</a>
+        <a href="/products?source=sql" class="source-tab {% if source == 'sql' %}active{% endif %}">SQL Database</a>
+    </div>
+    
+    <div class="nav-links">
+        <a href="/products?source=json">All JSON Products</a>
+        <a href="/products?source=csv">All CSV Products</a>
+        <a href="/products?source=sql">All SQL Products</a>
+        <a href="/products?source=json&id=1">JSON ID 1</a>
+        <a href="/products?source=sql&id=3">SQL ID 3</a>
+        <a href="/products?source=csv&id=5">CSV ID 5</a>
+    </div>
+    
     {% if error %}
-        <p class="error">Error: {{ error }}</p>
+        <div class="error">
+            <strong>Error:</strong> {{ error }}
+        </div>
     {% endif %}
     
     {% if source %}
-        <p class="info">Source: {{ source|upper }}</p>
+        <div class="info">
+            <strong>Source:</strong> {{ source|upper }}
+            {% if products|length == 1 %}
+                | <strong>Showing:</strong> Product ID {{ products[0].id }}
+            {% else %}
+                | <strong>Showing:</strong> {{ products|length }} products
+            {% endif %}
+        </div>
     {% endif %}
     
     {% if products %}
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Price</th>
-            </tr>
-            {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.category }}</td>
-                <td>${{ "%.2f"|format(product.price) }}</td>
-            </tr>
-            {% endfor %}
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.category }}</td>
+                    <td class="price">${{ "%.2f"|format(product.price) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
     {% elif not error %}
-        <p>No products to display.</p>
+        <div class="empty">
+            No products found in the {{ source }} source.
+        </div>
     {% endif %}
     
-    <p>
-        <a href="/products?source=json">View JSON Products</a> | 
-        <a href="/products?source=csv">View CSV Products</a>
-    </p>
+    <div class="nav-links">
+        <h3>Test URLs:</h3>
+        <ul>
+            <li><a href="/products?source=json">/products?source=json</a></li>
+            <li><a href="/products?source=csv">/products?source=csv</a></li>
+            <li><a href="/products?source=sql">/products?source=sql</a></li>
+            <li><a href="/products?source=json&id=2">/products?source=json&id=2</a></li>
+            <li><a href="/products?source=csv&id=6">/products?source=csv&id=6</a></li>
+            <li><a href="/products?source=sql&id=4">/products?source=sql&id=4</a></li>
+            <li><a href="/products?source=invalid">/products?source=invalid</a> (Error test)</li>
+            <li><a href="/products?source=sql&id=99">/products?source=sql&id=99</a> (Error test)</li>
+        </ul>
+    </div>
 </body>
 </html>
