@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Product Display</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .error { color: red; font-weight: bold; }
+        .info { color: blue; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Product Display</h1>
+    
+    {% if error %}
+        <p class="error">Error: {{ error }}</p>
+    {% endif %}
+    
+    {% if source %}
+        <p class="info">Source: {{ source|upper }}</p>
+    {% endif %}
+    
+    {% if products %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>${{ "%.2f"|format(product.price) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% elif not error %}
+        <p>No products to display.</p>
+    {% endif %}
+    
+    <p>
+        <a href="/products?source=json">View JSON Products</a> | 
+        <a href="/products?source=csv">View CSV Products</a>
+    </p>
+</body>
+</html>
